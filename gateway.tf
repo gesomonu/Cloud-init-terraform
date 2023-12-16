@@ -1,5 +1,5 @@
 # this will create IGW
-resource "aws_internet_gateway" "gw" {
+resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc_main.id
 
   tags = {
@@ -7,23 +7,28 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-# # this will attach the internet gateway to our VPC  
-# resource "aws_internet_gateway_attachment" "igw_attachment" {
-#   vpc_id              = aws_vpc.vpc_main.id
-#   internet_gateway_id = aws_internet_gateway.gw.id
-# }
 
-# this is a route table for public subnets, which will have an IGW attached to it
+# This will create the IGW VPC Attachment
+resource "aws_internet_gateway_attachment" "igw_attachment" {
+  internet_gateway_id = aws_internet_gateway.igw.id
+  vpc_id              = aws_vpc.vpc_main.id
+}
+
+
+
+
+# This is a route table for public subnets.
 resource "aws_route_table" "public-rtb" {
   vpc_id = aws_vpc.vpc_main.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw.id
+    gateway_id = aws_internet_gateway.igw.id
   }
   tags = {
     Name = "Public Route Table"
   }
 }
+
 
 # This is a route table for private subnets.
 resource "aws_route_table" "private_rtb" {

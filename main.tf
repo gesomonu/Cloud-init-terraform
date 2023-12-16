@@ -12,6 +12,8 @@ resource "aws_vpc" "vpc_main" {
 resource "aws_subnet" "web_subnet1" {
   vpc_id     = aws_vpc.vpc_main.id
   cidr_block = "10.0.8.0/21"
+  availability_zone = "us-east-1a"
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "web_subnet1"
@@ -23,7 +25,9 @@ resource "aws_subnet" "web_subnet1" {
 resource "aws_subnet" "web_subnet2" {
   vpc_id     = aws_vpc.vpc_main.id
   cidr_block = "10.0.16.0/21"
-
+  availability_zone = "us-east-1b"
+  map_public_ip_on_launch = true
+  
   tags = {
     Name = "web_subnet2"
   }
@@ -34,7 +38,7 @@ resource "aws_subnet" "web_subnet2" {
 resource "aws_subnet" "app_subnet1" {
   vpc_id     = aws_vpc.vpc_main.id
   cidr_block = "10.0.24.0/21"
-
+  availability_zone = "us-east-1a"  
   tags = {
     Name = "app_subnet1"
   }
@@ -44,7 +48,7 @@ resource "aws_subnet" "app_subnet1" {
 resource "aws_subnet" "app_subnet2" {
   vpc_id     = aws_vpc.vpc_main.id
   cidr_block = "10.0.32.0/21"
-
+  availability_zone = "us-east-1b"
   tags = {
     Name = "app_subnet2"
   }
@@ -54,7 +58,7 @@ resource "aws_subnet" "app_subnet2" {
 resource "aws_subnet" "db_subnet1" {
   vpc_id     = aws_vpc.vpc_main.id
   cidr_block = "10.0.40.0/21"
-
+  availability_zone = "us-east-1a"
   tags = {
     Name = "db_subnet1"
   }
@@ -64,7 +68,7 @@ resource "aws_subnet" "db_subnet1" {
 resource "aws_subnet" "db_subnet2" {
   vpc_id     = aws_vpc.vpc_main.id
   cidr_block = "10.0.48.0/21"
-
+  availability_zone = "us-east-1b"
   tags = {
     Name = "db_subnet2"
   }
